@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bilangan Rasional - Matematika Kelas 7 MTs</title>
+<style>
+:root{--bg:#fff;--ink:#111;--blue:#0b4fd6;--org:#c2410c;--pur:#6d28d9;--soft:#eef3ff;--ok:#0a6b2d;--track:#d6deef}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:20px/1.6 Arial,Helvetica,sans-serif}
+main{max-width:760px;margin:0 auto;padding:16px}
+header{background:var(--blue);color:#fff;border-radius:14px;padding:18px}
+h1{font-size:1.6rem;margin:0 0 8px}
+h2{font-size:1.35rem;margin:0 0 10px;color:var(--blue)}
+section{border:3px solid var(--blue);border-radius:14px;padding:16px;margin:16px 0}
+ul{margin:6px 0;padding-left:24px}
+button{font:inherit;font-weight:700;background:var(--blue);color:#fff;border:0;border-radius:10px;padding:12px 18px;margin:6px 6px 0 0;cursor:pointer;min-height:48px}
+button.alt{background:#fff;color:var(--blue);border:3px solid var(--blue)}
+button:disabled{opacity:.4;cursor:default}
+button:focus-visible,.mark:focus-visible,input:focus-visible{outline:4px solid #f59e0b;outline-offset:2px}
+.box{background:var(--soft);border-radius:10px;padding:12px;margin:10px 0}
+.hide{display:none}
+.center{text-align:center}
+.big{font-size:2.2rem;font-weight:700;text-align:center}
+.frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 6px;line-height:1.25}
+.frac span:first-child{border-bottom:3px solid currentColor;padding:0 8px}
+label{display:block;font-weight:700;margin-top:10px}
+.note{font-weight:700}
+.q{font-weight:700}
+
+/* ===== Visualisasi interaktif ===== */
+.card{background:#fff;border:3px solid var(--blue);border-radius:14px;padding:12px;margin-top:14px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.chips button{margin:0;padding:6px 14px;font-size:.95rem}
+.row{display:flex;align-items:center;gap:10px;margin-top:6px}
+button.step-btn{width:52px;min-width:52px;height:52px;padding:0;margin:0;border-radius:50%;font-size:1.7rem;line-height:1}
+input[type=range]{-webkit-appearance:none;appearance:none;flex:1;min-width:0;height:18px;border-radius:9px;background:var(--track);margin:0;touch-action:pan-y}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:42px;height:42px;border-radius:50%;background:#fff;border:7px solid var(--c,#0b4fd6);box-shadow:0 3px 8px rgba(0,0,0,.4);cursor:grab;transition:transform .15s}
+input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;background:#fff;border:7px solid var(--c,#0b4fd6);box-shadow:0 3px 8px rgba(0,0,0,.4);cursor:grab}
+input[type=range]::-moz-range-track{background:transparent}
+input[type=range]:active::-webkit-slider-thumb{transform:scale(1.2)}
+.bump{animation:bump .35s}
+@keyframes bump{0%{transform:scale(.85)}60%{transform:scale(1.1)}100%{transform:scale(1)}}
+.bars{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0 4px}
+.bar{flex:1 1 140px;max-width:230px;display:flex;gap:3px;padding:4px;background:#3b1d00;border-radius:10px}
+button.cell{flex:1;min-width:0;height:48px;margin:0;padding:0;min-height:0;border-radius:5px;background:#f6e7c8;color:#fff;font-size:1.5rem;line-height:1}
+button.cell.pos{background:linear-gradient(145deg,#b35a2a,#6b3410);box-shadow:inset 0 2px 0 rgba(255,255,255,.3)}
+button.cell.neg{background:linear-gradient(145deg,#f08a3c,#c2410c);box-shadow:inset 0 2px 0 rgba(255,255,255,.3)}
+button.cell.pop{animation:pop .3s}
+@keyframes pop{0%{transform:scale(.6)}70%{transform:scale(1.15)}100%{transform:scale(1)}}
+.lwrap{padding:0 24px}
+.line{position:relative;height:110px;margin-top:60px;touch-action:pan-y;cursor:pointer;user-select:none;-webkit-user-select:none}
+.axis{position:absolute;left:0;right:0;top:40px;height:6px;border-radius:3px;background:var(--ink)}
+.seg{position:absolute;top:38px;height:10px;border-radius:5px;background:var(--blue);transition:left .18s,width .18s}
+.seg.neg{background:var(--org)}
+.tick{position:absolute;top:34px;width:3px;height:18px;margin-left:-1px;background:var(--ink)}
+.tick.s{top:38px;height:10px;background:#555}
+.tl{position:absolute;top:58px;transform:translateX(-50%);font-weight:700;font-size:.95rem}
+.mark{position:absolute;top:27px;width:34px;height:34px;margin-left:-17px;border-radius:50%;background:var(--blue);border:4px solid #fff;box-shadow:0 0 0 3px var(--ink),0 4px 8px rgba(0,0,0,.4);transition:left .18s;z-index:2}
+.mark.neg{background:var(--org)}
+.bub{position:absolute;bottom:42px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:2px 12px;border-radius:10px;font-weight:700;white-space:nowrap}
+.dragging .mark,.dragging .seg{transition:none}
+.fb.good{color:var(--ok)}
+.fb.bad{color:#b91c1c}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<main>
+<header>
+<h1>Mengenal Bilangan Rasional</h1>
+<div>Matematika - Kelas 7 MTs</div>
+<p><b>Tujuan belajar.</b> Setelah belajar, kamu bisa:</p>
+<ul>
+<li>menjelaskan arti bilangan rasional,</li>
+<li>menempatkan bilangan rasional di garis bilangan,</li>
+<li>membandingkan dua bilangan rasional.</li>
+</ul>
+</header>
+
+<section>
+<h2>Pemantik</h2>
+<p class="q">Kamu punya 1 batang cokelat. Kamu makan 3 dari 4 potong. Berapa bagian yang kamu makan?</p>
+<p class="q">Lalu, suhu di kulkas -2 derajat. Apakah angka itu juga bisa berbentuk pecahan?</p>
+<p>Coba pikirkan dulu. Lalu lanjut ke penjelasan.</p>
+</section>
+
+<section>
+<h2>Penjelasan Bertahap</h2>
+<div class="box" id="step"></div>
+<button class="alt" id="prev">Kembali</button>
+<button id="next">Lanjut</button>
+<span id="count" class="note"></span>
+</section>
+
+<section>
+<h2>Coba Sendiri: Cokelat dan Garis Bilangan</h2>
+<p>Geser, tekan, atau seret. Semuanya langsung berubah!</p>
+<div class="note">Pilih contoh cepat:</div>
+<div class="chips" id="chips"></div>
+
+<div class="card">
+<div class="big" id="show"></div>
+<div class="note center" id="info"></div>
+<div class="note center" id="info2"></div>
+</div>
+
+<div class="card">
+<label for="p">Pembilang (atas): <span id="vp"></span></label>
+<div class="row">
+<button class="alt step-btn" id="pm" aria-label="Kurangi pembilang">&minus;</button>
+<input type="range" id="p" min="-16" max="16" value="3">
+<button class="alt step-btn" id="pp" aria-label="Tambah pembilang">+</button>
+</div>
+<label for="d">Penyebut (bawah): <span id="vd"></span></label>
+<div class="row">
+<button class="alt step-btn" id="dm" aria-label="Kurangi penyebut">&minus;</button>
+<input type="range" id="d" min="1" max="6" value="4">
+<button class="alt step-btn" id="dp" aria-label="Tambah penyebut">+</button>
+</div>
+<button class="alt" id="sign">Ubah tanda + / &minus;</button>
+</div>
+
+<div class="card">
+<div class="note">Cokelatmu (tekan kotak untuk mengubah pembilang)</div>
+<div class="bars" id="bars"></div>
+<div>Cokelat: biru-cokelat berarti positif. Oranye dengan tanda &minus; berarti negatif.</div>
+</div>
+
+<div class="card">
+<div class="note">Garis bilangan (seret titik atau tekan garisnya)</div>
+<div class="lwrap">
+<div class="line" id="line">
+<div class="axis"></div>
+<div class="seg" id="seg"></div>
+<div class="mark" id="mark" tabindex="0" role="slider" aria-label="Titik pada garis bilangan"><span class="bub" id="bub"></span></div>
+</div>
+</div>
+<div>Garis berwarna menunjukkan jarak dari 0. Garis kecil membagi satu utuh sesuai penyebut.</div>
+</div>
+
+<div class="card">
+<div class="note">Tantangan</div>
+<p id="task"></p>
+<button id="chk">Cek jawaban</button>
+<button class="alt" id="newc">Tantangan baru</button>
+<p class="note fb" id="fb"></p>
+<div>Skor: <b id="score">0</b> benar (hilang jika halaman ditutup)</div>
+</div>
+</section>
+
+<section>
+<h2>Tiga Contoh Soal</h2>
+
+<div class="box">
+<p class="q">Soal 1. Letakkan 3/4 dan -3/4 di garis bilangan. Mana yang di kanan 0?</p>
+<button class="alt" onclick="tg('a1')">Lihat pembahasan</button>
+<div id="a1" class="hide"><p>3/4 artinya 3 dari 4 potong. Nilainya positif. Titiknya di kanan 0, antara 0 dan 1.</p><p>-3/4 nilainya negatif. Titiknya di kiri 0, antara -1 dan 0.</p><p><b>Jawab: 3/4 ada di kanan 0.</b></p></div>
+</div>
+
+<div class="box">
+<p class="q">Soal 2. Mana yang lebih besar: -1/2 atau -2/3?</p>
+<button class="alt" onclick="tg('a2')">Lihat pembahasan</button>
+<div id="a2" class="hide"><p>Samakan penyebut. 1/2 = 3/6. 2/3 = 4/6.</p><p>Jadi -1/2 = -3/6 dan -2/3 = -4/6.</p><p>Di garis bilangan, -3/6 lebih dekat ke 0 daripada -4/6. Makin ke kanan, makin besar.</p><p><b>Jawab: -1/2 lebih besar.</b></p></div>
+</div>
+
+<div class="box">
+<p class="q">Soal 3. Ubah 5/2 menjadi desimal. Lalu tentukan letaknya.</p>
+<button class="alt" onclick="tg('a3')">Lihat pembahasan</button>
+<div id="a3" class="hide"><p>5 dibagi 2 sama dengan 2,5.</p><p>Itu 2 utuh lebih setengah. Titiknya tepat di tengah antara 2 dan 3.</p><p><b>Jawab: 5/2 = 2,5 dan ada di antara 2 dan 3.</b></p></div>
+</div>
+</section>
+
+<section>
+<h2>Rangkuman</h2>
+<ul>
+<li>Bilangan rasional bisa ditulis a/b. a dan b bilangan bulat. b tidak boleh 0.</li>
+<li>Bilangan bulat dan desimal berakhir juga rasional.</li>
+<li>Bilangan negatif ada di kiri 0. Positif di kanan 0.</li>
+<li>Makin ke kanan, nilainya makin besar.</li>
+<li>Untuk membandingkan, samakan penyebut dulu.</li>
+</ul>
+</section>
+</main>
+
+<script>
+var $=function(i){return document.getElementById(i)};
+function fmt(n){return n<0?"\u2212"+(-n):""+n}
+function fh(p,d){return '<span class="frac"><span>'+fmt(p)+'</span><span>'+d+'</span></span>'}
+function gcd(a,b){a=Math.abs(a);b=Math.abs(b);while(b){var t=a%b;a=b;b=t}return a}
+function tg(id){$(id).classList.toggle("hide")}
+
+/* ===== Penjelasan bertahap ===== */
+var steps=[
+"<b>Langkah 1.</b> Pecahan itu bagian dari satu utuh. Contoh: 3/4 berarti 3 dari 4 potong sama besar.",
+"<b>Langkah 2.</b> Angka atas disebut pembilang. Angka bawah disebut penyebut. Penyebut tidak boleh 0.",
+"<b>Langkah 3.</b> Bilangan bulat juga bisa jadi pecahan. Contoh: 5 = 5/1. Dan -2 = -2/1.",
+"<b>Langkah 4.</b> Bilangan yang bisa ditulis a/b dengan a, b bulat dan b tidak 0 disebut <b>bilangan rasional</b>.",
+"<b>Langkah 5.</b> Rasional bisa negatif. Contoh: -3/4. Letaknya di kiri 0. Sekarang coba penggeser di bawah!"
+];
+var i=0;
+function showStep(){
+ $("step").innerHTML=steps[i];
+ $("count").textContent="Langkah "+(i+1)+" dari "+steps.length;
+ $("prev").disabled=(i===0);
+ $("next").disabled=(i===steps.length-1);
+}
+$("next").onclick=function(){if(i<steps.length-1){i++;showStep()}};
+$("prev").onclick=function(){if(i>0){i--;showStep()}};
+showStep();
+
+/* ===== Visualisasi interaktif ===== */
+var st={p:3,d:4,neg:false},MIN=-4,MAX=4,lastD=0,prev=[];
+var P=$("p"),D=$("d"),L=$("line");
+
+function pos(v){return (v-MIN)/(MAX-MIN)*100}
+
+function setState(p,d){
+ if(d!==undefined)st.d=d;
+ st.p=p;
+ var m=4*st.d;
+ if(st.p>m)st.p=m;
+ if(st.p<-m)st.p=-m;
+ if(st.p<0)st.neg=true;else if(st.p>0)st.neg=false;
+ update();
+}
+
+function buildTicks(d){
+ var old=L.querySelectorAll(".tick,.tl");
+ for(var k=0;k<old.length;k++)L.removeChild(old[k]);
+ for(var n=MIN*d;n<=MAX*d;n++){
+  var t=document.createElement("div");
+  t.className="tick"+(n%d===0?"":" s");
+  t.style.left=pos(n/d)+"%";
+  L.appendChild(t);
+ }
+ for(var w=MIN;w<=MAX;w++){
+  var l=document.createElement("div");
+  l.className="tl";l.textContent=fmt(w);l.style.left=pos(w)+"%";
+  L.appendChild(l);
+ }
+}
+
+function fill(el,color,a,b){
+ el.style.setProperty("--c",color);
+ el.style.background="linear-gradient(90deg,var(--track) 0%,var(--track) "+a+"%,"+color+" "+a+"%,"+color+" "+b+"%,var(--track) "+b+"%,var(--track) 100%)";
+}
+
+function drawBars(){
+ var a=Math.abs(st.p),d=st.d,nb=Math.min(4,Math.floor(a/d)+1),box=$("bars"),cur=[];
+ box.innerHTML="";
+ for(var b=0;b<nb;b++){
+  var bar=document.createElement("div");bar.className="bar";
+  for(var c=0;c<d;c++){
+   var k=b*d+c,on=k<a;cur[k]=on;
+   var cell=document.createElement("button");
+   cell.className="cell"+(on?" "+(st.neg?"neg":"pos"):"")+((prev[k]!==undefined&&prev[k]!==on)?" pop":"");
+   cell.textContent=(on&&st.neg)?"\u2212":"";
+   cell.setAttribute("aria-label","Kotak ke-"+(k+1));
+   cell.onclick=(function(k){return function(){tapCell(k)}})(k);
+   bar.appendChild(cell);
+  }
+  box.appendChild(bar);
+ }
+ prev=cur;
+}
+
+function tapCell(k){
+ var a=Math.abs(st.p),na=(k+1===a)?k:k+1;
+ st.p=(st.neg?-1:1)*na;
+ update();
+}
+
+function update(){
+ var p=st.p,d=st.d,v=p/d,a=Math.abs(p);
+ var col=st.neg?"#c2410c":"#0b4fd6";
+ if(d!==lastD){buildTicks(d);prev=[];lastD=d}
+ P.min=-4*d;P.max=4*d;P.value=p;D.value=d;
+ $("vp").textContent=fmt(p);$("vd").textContent=d;
+
+ /* warna penggeser */
+ var pp=(p+4*d)/(8*d)*100;
+ fill(P,col,Math.min(50,pp),Math.max(50,pp));
+ fill(D,"#6d28d9",0,(d-1)/5*100);
+
+ /* pecahan besar */
+ var r=Math.round(v*100)/100,exact=Math.abs(v*100-Math.round(v*100))<1e-9;
+ var dec=(r<0?"\u2212":"")+Math.abs(r).toString().replace(".",",");
+ var s=$("show");
+ s.innerHTML=fh(p,d)+(exact?" = ":" \u2248 ")+dec;
+ s.classList.remove("bump");void s.offsetWidth;s.classList.add("bump");
+
+ /* keterangan */
+ $("info").textContent=p>0?"Bilangan positif: titik di kanan 0.":(p<0?"Bilangan negatif: titik di kiri 0.":"Ini tepat di 0.");
+ var w=Math.floor(a/d),rem=a%d,t="";
+ if(a>0&&a<d)t="Itu "+a+" dari "+d+" potong.";
+ else if(w>=1&&rem>0)t="Itu "+w+" utuh lebih "+rem+"/"+d+".";
+ else if(w>=1)t="Itu tepat "+w+" utuh.";
+ var g=gcd(p,d);
+ if(p!==0&&g>1)t+=" Bentuk sederhana: "+fh(p/g,d/g);
+ $("info2").innerHTML=t;
+
+ drawBars();
+
+ /* garis bilangan */
+ var m=$("mark"),sg=$("seg"),z=pos(0),x=pos(v);
+ m.style.left=x+"%";
+ m.className="mark"+(st.neg?" neg":"");
+ sg.className="seg"+(st.neg?" neg":"");
+ sg.style.left=Math.min(z,x)+"%";
+ sg.style.width=Math.abs(x-z)+"%";
+ $("bub").textContent=fmt(p)+"/"+d;
+ m.setAttribute("aria-valuetext",fmt(p)+" per "+d);
+}
+
+/* penggeser dan tombol */
+P.oninput=function(){setState(parseInt(P.value,10))};
+D.oninput=function(){setState(st.p,parseInt(D.value,10))};
+$("pm").onclick=function(){setState(st.p-1)};
+$("pp").onclick=function(){setState(st.p+1)};
+$("dm").onclick=function(){setState(st.p,Math.max(1,st.d-1))};
+$("dp").onclick=function(){setState(st.p,Math.min(6,st.d+1))};
+$("sign").onclick=function(){st.neg=!st.neg;st.p=-st.p;update()};
+
+/* contoh cepat */
+var presets=[[1,2],[3,4],[-2,3],[5,2],[-7,4]];
+presets.forEach(function(q){
+ var b=document.createElement("button");
+ b.className="alt";b.innerHTML=fh(q[0],q[1]);
+ b.onclick=function(){setState(q[0],q[1])};
+ $("chips").appendChild(b);
+});
+
+/* seret titik di garis bilangan */
+var drag=false;
+function fromEvent(e){
+ var r=L.getBoundingClientRect(),x=(e.clientX-r.left)/r.width;
+ x=Math.max(0,Math.min(1,x));
+ setState(Math.round((MIN+x*(MAX-MIN))*st.d));
+}
+function stop(){drag=false;L.classList.remove("dragging")}
+L.addEventListener("pointerdown",function(e){
+ drag=true;L.classList.add("dragging");
+ try{L.setPointerCapture(e.pointerId)}catch(x){}
+ fromEvent(e);
+});
+L.addEventListener("pointermove",function(e){if(drag)fromEvent(e)});
+L.addEventListener("pointerup",stop);
+L.addEventListener("pointercancel",stop);
+$("mark").addEventListener("keydown",function(e){
+ if(e.key==="ArrowLeft"||e.key==="ArrowDown"){setState(st.p-1);e.preventDefault()}
+ if(e.key==="ArrowRight"||e.key==="ArrowUp"){setState(st.p+1);e.preventDefault()}
+});
+
+/* tantangan */
+var T=[[1,2],[3,4],[-2,3],[5,2],[-1,4],[7,4],[-3,2]],ti=-1,score=0;
+function newC(){
+ var n;do{n=Math.floor(Math.random()*T.length)}while(n===ti);
+ ti=n;
+ $("task").innerHTML="Geser titik ke "+fh(T[n][0],T[n][1])+" lalu tekan Cek.";
+ $("fb").textContent="";$("fb").className="note fb";
+}
+$("chk").onclick=function(){
+ var t=T[ti],p=st.p,d=st.d,f=$("fb");
+ if(p*t[1]===t[0]*d){
+  score++;$("score").textContent=score;
+  f.className="note fb good";
+  f.innerHTML="Benar! "+fh(p,d)+((p===t[0]&&d===t[1])?"":" nilainya sama dengan "+fh(t[0],t[1]))+". Hebat!";
+ }else{
+  f.className="note fb bad";
+  f.textContent=(p/d<t[0]/t[1])?"Titikmu terlalu ke kiri. Geser ke kanan.":"Titikmu terlalu ke kanan. Geser ke kiri.";
+ }
+};
+$("newc").onclick=newC;
+
+update();
+newC();
+</script>
+</body>
+</html>
